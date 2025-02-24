@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos de CSS Grid: Básico a Intermedio</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1, h2 {
+            color: #333;
+        }
+        
+        .ejemplo {
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        
+        .grid-container {
+            margin: 20px 0;
+        }
+        
+        .item {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        /* Colores alternos para los items */
+        .item:nth-child(2n) {
+            background-color: #2980b9;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        
+        /* Ejemplo 1: Grid Básico */
+        .grid-basico {
+            display: grid;
+            grid-template-columns: 200px 200px 200px;
+            grid-gap: 10px;
+        }
+        
+        /* Ejemplo 2: Grid con fracciones */
+        .grid-fracciones {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-gap: 15px;
+        }
+        
+        /* Ejemplo 3: Grid con repeat */
+        .grid-repeat {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+        }
+        
+        /* Ejemplo 4: Grid con minmax */
+        .grid-minmax {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(150px, 1fr));
+            grid-gap: 15px;
+        }
+        
+        /* Ejemplo 5: Grid con áreas */
+        .grid-areas {
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas: 
+                "header header header"
+                "sidebar contenido anuncios"
+                "footer footer footer";
+            grid-gap: 15px;
+            height: 500px;
+        }
+        
+        .grid-areas .item-header {
+            grid-area: header;
+            background-color: #e74c3c;
+        }
+        
+        .grid-areas .item-sidebar {
+            grid-area: sidebar;
+            background-color: #9b59b6;
+        }
+        
+        .grid-areas .item-contenido {
+            grid-area: contenido;
+            background-color: #f1c40f;
+            color: #333;
+        }
+        
+        .grid-areas .item-anuncios {
+            grid-area: anuncios;
+            background-color: #2ecc71;
+        }
+        
+        .grid-areas .item-footer {
+            grid-area: footer;
+            background-color: #e67e22;
+        }
+        
+        /* Ejemplo 6: Grid con posicionamiento explícito */
+        .grid-posicionamiento {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 100px);
+            grid-gap: 10px;
+        }
+        
+        .grid-posicionamiento .item-a {
+            grid-column: 1 / 3;
+            grid-row: 1 / 2;
+            background-color: #1abc9c;
+        }
+        
+        .grid-posicionamiento .item-b {
+            grid-column: 3 / 5;
+            grid-row: 1 / 3;
+            background-color: #d35400;
+        }
+        
+        .grid-posicionamiento .item-c {
+            grid-column: 1 / 2;
+            grid-row: 2 / 4;
+            background-color: #8e44ad;
+        }
+        
+        .grid-posicionamiento .item-d {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            background-color: #27ae60;
+        }
+        
+        .grid-posicionamiento .item-e {
+            grid-column: 2 / 4;
+            grid-row: 3 / 4;
+            background-color: #f39c12;
+        }
+        
+        .grid-posicionamiento .item-f {
+            grid-column: 4 / 5;
+            grid-row: 3 / 4;
+            background-color: #c0392b;
+        }
+        
+        /* Ejemplo 7: Grid con auto-fill y auto-fit */
+        .grid-autofill {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-gap: 15px;
+        }
+        
+        .grid-autofit {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-gap: 15px;
+        }
+        
+        /* Ejemplo 8: Grid con alineamiento */
+        .grid-alineamiento {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 15px;
+            height: 300px;
+            
+            /* Alineamiento de items */
+            justify-items: center;
+            align-items: center;
+        }
+        
+        .grid-alineamiento .item {
+            width: 80%;
+            height: 80px;
+        }
+        
+        .item-start {
+            justify-self: start;
+            align-self: start;
+        }
+        
+        .item-end {
+            justify-self: end;
+            align-self: end;
+        }
+        
+        .item-stretch {
+            justify-self: stretch;
+            align-self: stretch;
+        }
+        
+        /* Ejemplo 9: Grid responsivo con media queries */
+        .grid-responsivo {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 15px;
+        }
+        
+        @media (max-width: 900px) {
+            .grid-responsivo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .grid-responsivo {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Ejemplo 10: Grid avanzado con áreas responsivas */
+        .grid-avanzado {
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas: 
+                "header header header"
+                "nav    main   aside"
+                "footer footer footer";
+            grid-gap: 15px;
+            height: 500px;
+        }
+        
+        .grid-avanzado .header { grid-area: header; background-color: #e74c3c; }
+        .grid-avanzado .nav { grid-area: nav; background-color: #3498db; }
+        .grid-avanzado .main { grid-area: main; background-color: #2ecc71; }
+        .grid-avanzado .aside { grid-area: aside; background-color: #f39c12; }
+        .grid-avanzado .footer { grid-area: footer; background-color: #9b59b6; }
+        
+        @media (max-width: 768px) {
+            .grid-avanzado {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "header"
+                    "nav"
+                    "main"
+                    "aside"
+                    "footer";
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejemplos de CSS Grid: Básico a Intermedio</h1>
+    <p>A continuación se presentan varios ejemplos de CSS Grid que van desde lo más básico hasta un nivel intermedio.</p>
+    
+    <!-- Ejemplo 1: Grid Básico -->
+    <div class="ejemplo">
+        <h2>1. Grid Básico</h2>
+        <p>Un grid simple con 3 columnas de ancho fijo de 200px cada una.</p>
+        <pre><code>display: grid;
+grid-template-columns: 200px 200px 200px;
+grid-gap: 10px;</code></pre>
+        
+        <div class="grid-container grid-basico">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+            <div class="item">6</div>
+        </div>
+    </div>
+    
+    <!-- Ejemplo 2: Grid con fracciones -->
+    <div class="ejemplo">
+        <h2>2. Grid con Fracciones (fr)</h2>
+        <p>Uso de la unidad <code>fr</code> para distribución proporcional del espacio. Aquí la columna central ocupa el doble de espacio.</p>
+        <pre><code>display: grid;
+grid-template-columns: 1fr 2fr 1fr;
+grid-gap: 15px;</code></pre>
+        
+        <div class="grid-container grid-fracciones">
+            <div class="item">1fr</div>
+            <div class="item">2fr</div>
+            <div class="item">1fr</div>
+            <div class="item">1fr</div>
+            <div class="item">2fr</div>
+            <div class="item">1fr</div>
+        </div>
+    </div>
+    
+    <!-- Ejemplo 3: Grid con repeat -->
+    <div class="ejemplo">
+        <h2>3. Grid con Función Repeat</h2>
+        <p>Uso de la función <code>repeat()</code> para crear 4 columnas del mismo tamaño.</p>
+        <pre><code>display: grid;
+grid-template-columns: repeat(4, 1fr);
+grid-gap: 10px;</code></pre>
+        
+        <div class="grid-container grid-repeat">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+            <div class="item">6</div>
+            <div class="item">7</div>
+            <div class="item">8</div>
+        </div>
+    </div>
+    
+    <!-- Ejemplo 4: Grid con minmax -->
+    <div class="ejemplo">
+        <h2>4. Grid con Función minmax()</h2>
+        <p>Uso de <code>minmax()</code> para crear columnas que tienen un mínimo de 150px y pueden crecer hasta ocupar una fracción igual del espacio disponible.</p>
+        <pre><code>display: grid;
+grid-template-columns: repeat(3, minmax(150px, 1fr));
+grid-gap: 15px;</code></pre>
+        
+        <div class="grid-container grid-minmax">
+            <div class="item">Mínimo 150px</div>
+            <div class="item">Mínimo 150px</div>
+            <div class="item">Mínimo 150px</div>
+            <div class="item">Mínimo 150px</div>
+            <div class="item">Mínimo 150px</div>
+            <div class="item">Mínimo 150px</div>
+        </div>
+    </div>
+    
+    <!-- Ejemplo 5: Grid con áreas -->
+    <div class="ejemplo">
+        <h2>5. Grid con Áreas</h2>
+        <p>Uso de <code>grid-template-areas</code> para crear un layout completo con encabezado, pie de página, contenido principal y barras laterales.</p>
+        <pre><code>display: grid;
+grid-template-columns: 1fr 3fr 1fr;
+grid-template-rows: auto 1fr auto;
+grid-template-areas: 
+    "header header header"
+    "sidebar contenido anuncios"
+    "footer footer footer";
+grid-gap: 15px;</code></pre>
+        
+        <div class="grid-container grid-areas">
+            <div class="item item-header">Header</div>
+            <div class="item item-sidebar">Sidebar</div>
+            <div class="item item-contenido">Contenido Principal</div>
+            <div class="item item-anuncios">Anuncios</div>
+            <div class="item item-footer">Footer</div>
+        </div>
+    </div>
+    
+    <!-- Ejemplo 6: Grid con posicionamiento explícito -->
+    <div class="ejemplo">
+        <h2>6. Grid con Posicionamiento Explícito</h2>
+        <p>Uso de <code>grid-column</code> y <code>grid-row</code> para posicionar elementos de forma específica en el grid.</p>
+        <pre><code>display: grid;
+grid-template-columns: repeat(4, 1fr);
+grid-template-rows: repeat(3, 100px);
+grid-gap: 10px;
+
+.item-a {
+    grid-column: 1 / 3; /* Desde línea 1 hasta línea 3 */
+    grid-row: 1 / 2;    /* Desde línea 1 hasta línea 2 */
+}</code></pre>
+        
+        <div class="grid-container grid-posicionamiento">
+            <div class="item item-a">A</div>
+            <div class="item item-b">B</div>
+            <div class="item item-c">C</div>
+            <div class="item item-d">D</div>
+            <div class="item item-e">E</div>
+            <div class="item item-f">F</div>
+        </div>
+    </div>
+    
+    <!-- Ejemplo 7: Grid con auto-fill y auto-fit -->
+    <div class="ejemplo">
+        <h2>7. Grid con auto-fill vs auto-fit</h2>
+        <p>Comparación entre <code>auto-fill</code> y <code>auto-fit</code> para crear layouts responsivos automáticos.</p>
+        
+        <h3>auto-fill: Mantiene el tamaño de las celdas y agrega columnas vacías</h3>
+        <pre><code>display: grid;
+grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+grid-gap: 15px;</code></pre>
+        
+        <div class="grid-container grid-autofill">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+        </div>
+        
+        <h3>auto-fit: Expande las celdas para llenar el espacio disponible</h3>
+        <pre><code>display: grid;
+grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+grid-gap: 15px;</code></pre>
+        
+        <div class="grid-container grid-autofit">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+        </div>
+    </div>
+    
+    <!-- Ejemplo 8: Grid con alineamiento -->
+    <div class="ejemplo">
+        <h2>8. Grid con Alineamiento</h2>
+        <p>Uso de propiedades de alineación para controlar la posición de elementos individuales dentro de sus celdas.</p>
+        <pre><code>display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-gap: 15px;
+justify-items: center; /* Alineación horizontal de todos los items */
+align-items: center;   /* Alineación vertical de todos los items */
+
+.item-start {
+    justify-self: start; /* Alineación horizontal individual */
+    align-self: start;   /* Alineación vertical individual */
+}</code></pre>
+        
+        <div class="grid-container grid-alineamiento">
+            <div class="item item-start">Start</div>
+            <div class="item">Centro (default)</div>
+            <div class="item item-end">End</div>
+            <div class="item item-stretch">Stretch</div>
+            <div class="item">Centro</div>
+            <div class="item">Centro</div>
+        </div>
+    </div>
+    
+    <!-- Ejemplo 9: Grid responsivo con media queries -->
+    <div class="ejemplo">
+        <h2>9. Grid Responsivo con Media Queries</h2>
+        <p>Adaptación del número de columnas según el ancho de la pantalla usando media queries.</p>
+        <pre><code>display: grid;
+grid-template-columns: repeat(4, 1fr);
+grid-gap: 15px;
+
+@media (max-width: 900px) {
+    .grid-responsivo {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .grid-responsivo {
+        grid-template-columns: 1fr;
+    }
+}</code></pre>
+        
+        <div class="grid-container grid-responsivo">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+            <div class="item">6</div>
+            <div class="item">7</div>
+            <div class="item">8</div>
+        </div>
+        <p>Cambia el tamaño de la ventana para ver el cambio en el número de columnas.</p>
+    </div>
+    
+    <!-- Ejemplo 10: Grid avanzado con áreas responsivas -->
+    <div class="ejemplo">
+        <h2>10. Grid Avanzado con Áreas Responsivas</h2>
+        <p>Layout completo con grid-areas que cambia su disposición en pantallas pequeñas.</p>
+        <pre><code>display: grid;
+grid-template-columns: 200px 1fr 200px;
+grid-template-rows: auto 1fr auto;
+grid-template-areas: 
+    "header header header"
+    "nav    main   aside"
+    "footer footer footer";
+grid-gap: 15px;
+
+/* Cambio a layout vertical en pantallas pequeñas */
+@media (max-width: 768px) {
+    .grid-avanzado {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "header"
+            "nav"
+            "main"
+            "aside"
+            "footer";
+    }
+}</code></pre>
+        
+        <div class="grid-container grid-avanzado">
+            <div class="item header">Header</div>
+            <div class="item nav">Nav</div>
+            <div class="item main">Main</div>
+            <div class="item aside">Aside</div>
+            <div class="item footer">Footer</div>
+        </div>
+        <p>Cambia el tamaño de la ventana para ver cómo el layout cambia a una sola columna en pantallas pequeñas.</p>
+    </div>
+</body>
+</html>
